@@ -1,0 +1,50 @@
+{% extends 'login_app/base.html' %}
+{% block content %}
+
+<div class="row">
+<div class="col-sm-4">
+    <h4 class="text-center alert alert-info ">Login Form</h4>
+    <form action="" method = 'POST'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" class= "btn btn-success" label="Login">
+    </form>
+</div>
+
+<div class="col-sm-7 offset-1">
+<h4 class="text-center alert alert-info ">Blogers Information</h4>
+
+{% if blogers %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Password</th>
+      <th scope="col">Control</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for bgr in blogers %}
+    <tr>
+      <th scope="row">{{ bgr.id }}</th>
+      <td>{{ bgr.name }}</td>
+      <td>{{ bgr.email }}</td>
+      <td>{{ bgr.password }}</td>
+      <td>
+      <a href="{% url 'update_user' bgr.id %}" class="btn btn-warning">Edit</a>
+      <form action="{% url 'delete_user' bgr.id %}" method='POST' class='d-inline'>{% csrf_token %}
+      <input type="submit" class='btn btn-danger' value='Delete'>
+      
+      
+      </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+</div>
+</div>
+{% endblock content %}
